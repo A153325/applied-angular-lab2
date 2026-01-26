@@ -1,35 +1,24 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { PageLayout } from '@ht/shared/ui-common/layouts/page';
 import { Resource } from '../types';
+import { LinkResourceItemLink } from '../resource-display/link';
 /* Note - you can use either interface or type for this. The differences are so small, I don't care. I like 'type' */
 
 @Component({
   selector: 'app-links-pages-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PageLayout],
+  imports: [PageLayout, LinkResourceItemLink],
   template: `<app-ui-page title="List of Links">
     <div class="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-cols-1 gap-2">
-      <!-- is my list of links -->
-
       @for (resource of links(); track resource.id) {
         <div class="bg-base-100 p-4 rounded-lg shadow-md flex flex-col  ">
           <p class="text-lg text-primary">{{ resource.title }}</p>
           <p class="text-base/70">{{ resource.description }}</p>
           <ul class="grid grid-cols-2 border-2 border-dashed border-accent/50 mt-4 p-4 h-full">
-            <li class="btn btn-accent btn-xs m-2 col-span-2">
-              <a
-                class=""
-                href="{{ resource.primaryLink.href }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                >{{ resource.primaryLink.label }}</a
-              >
-            </li>
+            <app-links-resource-link [link]="resource.primaryLink"></app-links-resource-link>
             @for (other of resource.additionalLinks; track other.href) {
               <li class="btn btn-accent btn-xs m-2 ">
-                <a class="" href="{{ other.href }}" target="_blank" rel="noopener noreferrer"
-                  >{{ other.label }}
-                </a>
+                <app-links-resource-link [link]="other"></app-links-resource-link>
               </li>
             }
           </ul>
