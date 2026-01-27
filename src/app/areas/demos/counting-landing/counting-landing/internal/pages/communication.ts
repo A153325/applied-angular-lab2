@@ -1,11 +1,13 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { PageLayout } from '@ht/shared/ui-common/layouts/page';
 import { ButtonRound } from './widgets/button-round';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonReset } from './widgets/button-reset';
+import { counterStore } from '../stores/counter';
 
 @Component({
   selector: 'app-counter-pages-communications',
+  providers: [counterStore], // create a new instance of this service that's life is scoped to this component.
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PageLayout, ButtonRound, RouterLink, RouterLinkActive, ButtonReset],
   template: `<app-ui-page title="communications">
@@ -29,30 +31,24 @@ import { ButtonReset } from './widgets/button-reset';
     </div>
     <div class="flex items-center justify-center">
       <app-counting-button-round
-        [disabled]="count() === 0"
+        [disabled]="store.current() === 0"
         label="-"
         intent="error"
-        (click)="decrement()"
+        (click)="store.decrement()"
       />
-      <span class="mx-2 text-2xl font-mono">{{ count() }}</span>
+      <span class="mx-2 text-2xl font-mono">{{ store.current() }}</span>
       <app-counting-button-round
-        [disabled]="count() === 10"
+        [disabled]="store.current() === 10"
         label="+"
         intent="success"
-        (click)="increment()"
+        (click)="store.increment()"
       />
 
-      <app-counting-button-reset [current]="count()" />
+      <app-counting-button-reset [current]="store.current()" />
     </div>
   </app-ui-page>`,
   styles: ``,
 })
 export class CommunicationPage {
-  count = signal(0); // "resets"
-  increment() {
-    this.count.update((c) => c + 1);
-  }
-  decrement() {
-    this.count.update((c) => c - 1);
-  }
+  store = inject(counterStore);
 }

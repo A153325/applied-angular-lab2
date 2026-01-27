@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { counterStore } from '../../stores/counter';
 
 @Component({
   selector: 'app-counting-button-reset',
@@ -6,8 +7,10 @@ import { Component, ChangeDetectionStrategy, input, model } from '@angular/core'
   imports: [],
   template: `
     <div>
-      <button class="btn btn-primary" (click)="reset()" [disabled]="current() === 0">Reset</button>
-      @if (current() === 0) {
+      <button class="btn btn-primary" (click)="store.reset()" [disabled]="store.current() === 0">
+        Reset
+      </button>
+      @if (store.current() === 0) {
         <span class="text-sm opacity-80">Cannot Reset because you are at the reset point</span>
       }
     </div>
@@ -15,9 +18,5 @@ import { Component, ChangeDetectionStrategy, input, model } from '@angular/core'
   styles: ``,
 })
 export class ButtonReset {
-  current = model(0); // TODO - better example when I do forms tomorrow.
-
-  reset() {
-    this.current.set(0);
-  }
+  store = inject(counterStore);
 }
