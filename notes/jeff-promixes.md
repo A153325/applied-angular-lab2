@@ -2,6 +2,9 @@
 
 - Some test samples
     - Didn't get far, but they are "working" - I'll demonstrate.
+        - System Tests with Playwright
+        - Unit Tests with vitest.
+        - Show the UI for both.
 - Add the links to Rainer's Videos (SignalStore, etc.)
     - It's in the dev resources.
 - Maybe a sample of Ngrx Store and Signal Store integration. Maybe.
