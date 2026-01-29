@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { padHours, padMinutes, padSeconds } from '@ht/shared/util-dates/padding';
 import { NgIcon } from '@ng-icons/core';
-import { tasksStore } from '../stores/tasks';
+import { tasksStore } from '../../../../shared/data/stores/tasks/store';
 
 export type Task = {
   startTime: Date;

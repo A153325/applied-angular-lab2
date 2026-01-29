@@ -1,7 +1,7 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { PageLayout } from '@ht/shared/ui-common/layouts/page';
-import { tasksStore } from '../../stores/tasks';
+import { tasksStore } from '@ht/shared/data/stores/tasks/store';
 
 // Creating a provider WHEREEVER means you are saying "create a new instance of this thing when injected here"
 @Component({
@@ -10,7 +10,7 @@ import { tasksStore } from '../../stores/tasks';
   imports: [PageLayout, DatePipe, DecimalPipe],
 
   template: `
-    <app-ui-page title="First Lab">
+    <app-ui-page title="Your Tasks">
       <table class="table mb-8">
         <!-- head -->
         <thead>
@@ -36,10 +36,6 @@ import { tasksStore } from '../../stores/tasks';
                 </button>
               </td>
             </tr>
-          } @empty {
-            <div class="alert alert-info">
-              <p>No Tasks Yet! Get Busy</p>
-            </div>
           }
         </tbody>
       </table>
